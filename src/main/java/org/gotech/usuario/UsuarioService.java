@@ -6,14 +6,13 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.lang.annotation.Repeatable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.text.Format;
+import java.time.LocalDate;
+import java.util.*;
 
 @RestController
 @RequestMapping("/usuario")
 public class UsuarioService {
-
 
     private final UsuarioRepository repository;
 
@@ -42,8 +41,15 @@ public class UsuarioService {
 
     public ResponseEntity<String> inserirUsuario(Usuario novoUsuario) {
         String response = "";
+        if(Objects.equals(novoUsuario.getNome(), "") ||
+                Objects.equals(novoUsuario.getEmail(), "") ||
+                Objects.equals(novoUsuario.getSenha(), "")){
+            response = "Todos os campos precisam estar preenchidos.";
+            return ResponseEntity.status(500).body(response);
+        }
         try {
             response = "Sucesso ao inserir o usuario " + novoUsuario.getNome();
+            novoUsuario.setCreatedDate(LocalDate.now());
             repository.save(novoUsuario);
         } catch (Exception e) {
             response = "Houve uma falha na insercao do usuario " + e.getMessage();
@@ -54,6 +60,12 @@ public class UsuarioService {
 
     public ResponseEntity<String> atualizarUsuario(Usuario atualizarUsuario){
         String response = "";
+        if(Objects.equals(atualizarUsuario.getNome(), "") ||
+                Objects.equals(atualizarUsuario.getEmail(), "") ||
+                Objects.equals(atualizarUsuario.getSenha(), "")){
+            response = "Todos os campos precisam estar preenchidos.";
+            return ResponseEntity.status(500).body(response);
+        }
         try {
             Usuario usuarioAtualizado = findById(atualizarUsuario.getId());
             usuarioAtualizado.setNome(atualizarUsuario.getNome());

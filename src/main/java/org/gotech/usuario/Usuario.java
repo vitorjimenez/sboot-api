@@ -2,6 +2,9 @@ package org.gotech.usuario;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
+import java.util.Date;
+
 @Entity
 @Table(name="usuario")
 public class Usuario {
@@ -12,14 +15,25 @@ public class Usuario {
     private String nome;
     private String email;
     private String senha;
+    private LocalDate createdDate;
 
     public Usuario(){}
 
-    public Usuario(Long id, String nome, String email, String senha) {
+
+    public Usuario(Long id, String nome, String email, String senha, LocalDate createdDate) {
         this.id = id;
         this.nome = nome;
         this.email = email;
         this.senha = senha;
+        this.createdDate = createdDate;
+    }
+
+    public LocalDate getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(LocalDate createdDate) {
+        this.createdDate = createdDate;
     }
 
     public Long getId() {

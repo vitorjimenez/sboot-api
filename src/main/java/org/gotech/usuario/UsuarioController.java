@@ -1,5 +1,6 @@
 package org.gotech.usuario;
 
+import jakarta.validation.Valid;
 import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
